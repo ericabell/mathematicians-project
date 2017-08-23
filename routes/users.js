@@ -51,4 +51,19 @@ router.post('/', (req, res) => {
 
 });
 
+router.post('/:id', (req, res) => {
+  // update a mathematician in the db
+  console.log(req.body);
+  res.send('update done')
+});
+
+router.get('/delete/:id', (req, res) => {
+  // delete a mathematician specified by the id
+  Mathematician.deleteOne({_id: ObjectId(req.params.id)})
+  .then( (docs) => {
+    console.log(`Deleted mathematician ${docs.name}`);
+    res.redirect('/');
+  })
+})
+
 module.exports = router;

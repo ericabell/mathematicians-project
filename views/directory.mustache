@@ -6,9 +6,14 @@
   </head>
   <body>
     <h1>Mathematician Directory</h1>
+
+    <p> <a href="http://localhost:3000/create">Create New Mathematician</a> </p>
+
+
     {{#data}}
     <dl class="">
       <a href="http://localhost:3000/update/{{_id}}">Update</a>
+      <a href="http://localhost:3000/delete/{{_id}}">Delete</a>      
       <dt>Name</dt>
         <dd>{{name}}</dd>
       <dt>Born</dt>
