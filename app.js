@@ -1,6 +1,11 @@
 const express = require('express');
 const mustacheExpress = require('mustache-express');
 const morgan = require('morgan');
+const bodyParser = require('body-parser');
+const mongoose = require('mongoose');
+
+mongoose.connect('mongodb://localhost:27017/math');
+
 
 let users = require('./routes/users.js');
 let app = express();
