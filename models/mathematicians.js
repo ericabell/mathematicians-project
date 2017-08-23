@@ -34,7 +34,19 @@ Mathematician.deleteMany({})
       wikipedia_link: 'https://en.wikipedia.org/wiki/Augustin-Louis_Cauchy'
     })
     .then( (docs) => {
-        console.log('Created mathematician');
+        console.log('Created mathematician Cauchy');
+        console.log(docs);
+    })
+    Mathematician.create({
+      name: 'Newton',
+      born: Date(),
+      died: Date(),
+      nationality: 'English',
+      known_for: ['one', 'two', 'three'],
+      wikipedia_link: 'https://en.wikipedia.org/wiki/Augustin-Louis_Cauchy'
+    })
+    .then( (docs) => {
+        console.log('Created mathematician Newton');
         console.log(docs);
     })
   })
