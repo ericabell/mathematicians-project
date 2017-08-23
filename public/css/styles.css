@@ -6,3 +6,9 @@ html,body {
 img {
   width: 200px;
 }
+
+.mathematician {
+  border-style: solid;
+  border-width: 2px;
+  padding: 10px;
+}
