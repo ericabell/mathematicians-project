@@ -3,12 +3,16 @@ const mustacheExpress = require('mustache-express');
 const morgan = require('morgan');
 const bodyParser = require('body-parser');
 const mongoose = require('mongoose');
+const fileUpload = require('express-fileupload');
+
 
 mongoose.connect('mongodb://localhost:27017/math');
 
 
 let users = require('./routes/users.js');
 let app = express();
+
+app.use(fileUpload);
 
 app.use(bodyParser.urlencoded({ extended: false }))
 

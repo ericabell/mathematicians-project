@@ -1,4 +1,5 @@
 const express = require('express');
+const fileUpload = require('express-fileupload');
 ObjectId = require('mongodb').ObjectID;
 // const data = require('../models/users');
 let data = {};
@@ -44,6 +45,12 @@ router.get('/update/:id', (req, res) => {
 });
 
 router.post('/', (req, res) => {
+  if(!req.files) {
+    return res.status(400).send('No files were selected');
+  }
+
+  let imageUpload = req.files.sampleFile.data;
+  let imageUploadFileType = req.files.sampleFile.mimetype;
   // create a new mathematician
   console.log(req.body);
   Mathematician.create({
@@ -52,6 +59,10 @@ router.post('/', (req, res) => {
     died: new Date(req.body.died),
     nationality: req.body.nationality,
     known_for: ['one', 'two', 'three'],
+    img: {
+      data: imageUpload,
+      contentType: imageUploadFileType
+    },
     wikipedia_link: 'https://en.wikipedia.org/wiki/Augustin-Louis_Cauchy'
   })
   .then( (docs) => {
