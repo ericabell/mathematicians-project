@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title>Update an Entry in Directory</title>
+  </head>
+  <body>
+
+    <h1>Update an Entry from the directory</h1>
+
+    {{#data}}
+      <form class="" action="/{{_id}}" method="post">
+        <label for="name">Name</label>
+        <input type="text" name="name" value="{{name}}">
+        <label for="born">Born</label>
+        <input type="date" name="born" value="{{born}}">
+        <label for="died">Died</label>
+        <input type="date" name="died" value="{{died}}">
+        <label for="nationality">Nationality</label>
+        <input type="text" name="nationality" value="{{nationality}}">
+
+        <input type="submit" name="" value="Update!">
+      </form>
+    {{/data}}
+
+  </body>
+</html>

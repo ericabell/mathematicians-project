@@ -1,4 +1,5 @@
 const express = require('express');
+ObjectId = require('mongodb').ObjectID;
 // const data = require('../models/users');
 let data = {};
 const MongoClient = require('mongodb').MongoClient;
@@ -20,6 +21,16 @@ router.get('/', (req, res) => {
 router.get('/create', (req, res) => {
   res.render('create');
 })
+
+router.get('/update/:id', (req, res) => {
+  // find the requested mathematician
+  Mathematician.find({_id: ObjectId(req.params.id)})
+    .then( (docs) => {
+      console.log('find a specific mathematician');
+      console.log(docs);
+      res.render('update', {data: docs});
+    })
+});
 
 router.post('/', (req, res) => {
   // create a new mathematician
