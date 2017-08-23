@@ -54,7 +54,17 @@ router.post('/', (req, res) => {
 router.post('/:id', (req, res) => {
   // update a mathematician in the db
   console.log(req.body);
-  res.send('update done')
+  Mathematician
+    .where({_id: ObjectId(req.params.id)})
+    .update( { name: req.body.name,
+               born: req.body.born,
+               died: req.body.died,
+               nationality: req.body.nationality
+     })
+     .then( (docs) => {
+       console.log('Mathematician updated!');
+       res.redirect('/');
+     })
 });
 
 router.get('/delete/:id', (req, res) => {
