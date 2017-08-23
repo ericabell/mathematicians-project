@@ -10,7 +10,7 @@ const mathematicianSchema = new mongoose.Schema({
     nationality: String,
     known_for: [String],
     wikipedia_link: String,
-    img: { data: Buffer, contentType: String }
+    img: { data: Buffer, contentType: String, url: String }
 });
 
 // virtual field for born and died in format for value
@@ -53,6 +53,7 @@ Mathematician.deleteMany({})
     let cauchy = new Mathematician;
     cauchy.img.data = fs.readFileSync('/Users/eabell/sandbox/tiy/week6/day3/mathematicians-project/public/images/cauchy.jpg');
     cauchy.img.contentType = 'image/jpg';
+    cauchy.img.url = '/images/cauchy.jpg'
     cauchy.name = 'Cauchy';
     cauchy.born = new Date('8-21-1789');
     cauchy.died = new Date('5-23-1857');
@@ -65,19 +66,26 @@ Mathematician.deleteMany({})
         console.log('Created mathematician Cauchy');
         console.log(docs);
     })
-    Mathematician.create({
-      name: 'Newton',
-      born: new Date('12-25-1642'),
-      died: new Date('3-20-1727'),
-      nationality: 'English',
-      known_for: ['Calculus', 'Newtonian mechanics', 'Binomial series'],
-      wikipedia_link: 'https://en.wikipedia.org/wiki/Augustin-Louis_Cauchy'
-    })
+
+    let newton = new Mathematician;
+    newton.img.data = fs.readFileSync('/Users/eabell/sandbox/tiy/week6/day3/mathematicians-project/public/images/cauchy.jpg');
+    newton.img.contentType = 'image/jpg';
+    newton.img.url = '/images/newton.jpg'
+    newton.name = 'Newton';
+    newton.born = new Date('8-21-1789');
+    newton.died = new Date('5-23-1857');
+    newton.nationality = 'English';
+    newton.known_for = ['Calculus', 'Newtonian mechanics', 'Binomial series'];
+    newton.wikipedia_link = 'https://en.wikipedia.org/wiki/Augustin-Louis_Cauchy';
+
+    newton.save()
     .then( (docs) => {
         console.log('Created mathematician Newton');
         console.log(docs);
     })
   })
+
+
 
   .catch( (err) => {
       console.log('Errors: ' + err);
