@@ -12,8 +12,8 @@ router.get('/', (req, res) => {
   Mathematician.find()
     .then( (docs) => {
       console.log('find all mathematicians');
-      console.log(mathematicians);
-      res.render('directory', {data: mathematicians});
+      console.log(docs);
+      res.render('directory', {data: docs});
     })
 });
 
