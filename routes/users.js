@@ -28,7 +28,9 @@ router.get('/update/:id', (req, res) => {
     .then( (docs) => {
       console.log('find a specific mathematician');
       console.log(docs);
-      res.render('update', {data: docs});
+      // the dates need to be transformed to "YYYY-MM-DD" so that
+      // the value attribute works
+      res.render('update', {data: docs, bornDate: docs[0].bornDate, diedDate: docs[0].diedDate});
     })
 });
 
@@ -37,8 +39,8 @@ router.post('/', (req, res) => {
   console.log(req.body);
   Mathematician.create({
     name: req.body.name,
-    born: req.body.born,
-    died: req.body.died,
+    born: new Date(req.body.born),
+    died: new Date(req.body.died),
     nationality: req.body.nationality,
     known_for: ['one', 'two', 'three'],
     wikipedia_link: 'https://en.wikipedia.org/wiki/Augustin-Louis_Cauchy'
@@ -57,8 +59,8 @@ router.post('/:id', (req, res) => {
   Mathematician
     .where({_id: ObjectId(req.params.id)})
     .update( { name: req.body.name,
-               born: req.body.born,
-               died: req.body.died,
+               born: new Date(req.body.born),
+               died: new Date(req.body.died),
                nationality: req.body.nationality
      })
      .then( (docs) => {
