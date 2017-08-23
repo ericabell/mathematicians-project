@@ -19,17 +19,19 @@
     {{#data}}
     <dl class="mathematician">
       <a href="http://localhost:3000/update/{{_id}}">Update</a>
-      <a href="http://localhost:3000/delete/{{_id}}">Delete</a>      
+      <a href="http://localhost:3000/delete/{{_id}}">Delete</a>
       <dt>Name</dt>
         <dd>{{name}}</dd>
       <dt>Born</dt>
-        <dd>{{born}}</dd>
+        <dd>{{bornDate}}</dd>
       <dt>Died</dt>
-        <dd>{{died}}</dd>
+        <dd>{{diedDate}}</dd>
       <dt>Known For</dt>
         <dd>{{known_for}}</dd>
       <dt>Wikipedia</dt>
         <dd>{{wikipedia_link}}</dd>
+      <dt>Nationality</dt>
+        <dd>{{nationality}}</dd>
     </dl>
     {{/data}}
   </body>
