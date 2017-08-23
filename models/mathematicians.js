@@ -1,6 +1,7 @@
 // models/recipe.js
 const mongoose = require('mongoose');
 mongoose.Promise = require('bluebird');
+const fs = require('fs');
 
 const mathematicianSchema = new mongoose.Schema({
     name: { type: String, required: true, unique: true },
@@ -9,7 +10,7 @@ const mathematicianSchema = new mongoose.Schema({
     nationality: String,
     known_for: [String],
     wikipedia_link: String,
-    photo: Buffer
+    img: { data: Buffer, contentType: String }
 });
 
 // virtual field for born and died in format for value
@@ -23,7 +24,7 @@ mathematicianSchema.virtual('diedDate')
   .get( function() {
     return formatDate(this.died);
   })
-  
+
 function formatDate(date) {
     var d = new Date(date),
         month = '' + (d.getMonth() + 1),
@@ -49,14 +50,17 @@ Mathematician.deleteMany({})
   })
   .then( () => {
     console.log('let us create some mathematicians');
-    Mathematician.create({
-      name: 'Cauchy',
-      born: new Date('8-21-1789'),
-      died: new Date('5-23-1857'),
-      nationality: 'French',
-      known_for: ['one', 'two', 'three'],
-      wikipedia_link: 'https://en.wikipedia.org/wiki/Augustin-Louis_Cauchy'
-    })
+    let cauchy = new Mathematician;
+    cauchy.img.data = fs.readFileSync('/Users/eabell/sandbox/tiy/week6/day3/mathematicians-project/public/images/cauchy.jpg');
+    cauchy.img.contentType = 'image/jpg';
+    cauchy.name = 'Cauchy';
+    cauchy.born = new Date('8-21-1789');
+    cauchy.died = new Date('5-23-1857');
+    cauchy.nationality = 'French';
+    cauchy.known_for = ['Cauchy–Schwarz inequality', 'Cauchy momentum equation', 'Cauchy–Euler equation'];
+    cauchy.wikipedia_link = 'https://en.wikipedia.org/wiki/Augustin-Louis_Cauchy';
+
+    cauchy.save()
     .then( (docs) => {
         console.log('Created mathematician Cauchy');
         console.log(docs);
@@ -66,7 +70,7 @@ Mathematician.deleteMany({})
       born: new Date('12-25-1642'),
       died: new Date('3-20-1727'),
       nationality: 'English',
-      known_for: ['one', 'two', 'three'],
+      known_for: ['Calculus', 'Newtonian mechanics', 'Binomial series'],
       wikipedia_link: 'https://en.wikipedia.org/wiki/Augustin-Louis_Cauchy'
     })
     .then( (docs) => {
