@@ -7,23 +7,28 @@
   <body>
     <h1>Mathematician Directory</h1>
 
+    <p> <a href="http://localhost:3000/">View All Mathematicians</a> </p>
     <p> <a href="http://localhost:3000/create">Create New Mathematician</a> </p>
 
 
     {{#data}}
     <dl class="">
       <a href="http://localhost:3000/update/{{_id}}">Update</a>
-      <a href="http://localhost:3000/delete/{{_id}}">Delete</a>      
+      <a href="http://localhost:3000/delete/{{_id}}">Delete</a>
       <dt>Name</dt>
-        <dd>{{name}}</dd>
+        <dd><a href="http://localhost:3000/{{_id}}">{{name}}</a></dd>
       <dt>Born</dt>
-        <dd>{{born}}</dd>
+        <dd>{{bornDate}}</dd>
       <dt>Died</dt>
-        <dd>{{died}}</dd>
+        <dd>{{diedDate}}</dd>
       <dt>Known For</dt>
-        <dd>{{known_for}}</dd>
+        <dd><ul>{{#known_for}}
+              <li>{{.}}</li>
+            {{/known_for}}
+          </ul>
+        </dd>
       <dt>Wikipedia</dt>
-        <dd>{{wikipedia_link}}</dd>
+        <dd><a href="{{wikipedia_link}}">Wikipedia</a></dd>
     </dl>
     {{/data}}
   </body>

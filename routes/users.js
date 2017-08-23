@@ -14,7 +14,16 @@ router.get('/', (req, res) => {
     .then( (docs) => {
       console.log('find all mathematicians');
       console.log(docs);
-      res.render('directory', {data: docs});
+      res.render('directory', {data: docs, bornDate: docs[0].bornDate, diedDate: docs[0].diedDate});
+    })
+});
+
+router.get('/:id', (req, res) => {
+  Mathematician.find({_id: ObjectId(req.params.id)})
+    .then( (docs) => {
+      console.log('find one mathematician');
+      console.log(docs);
+      res.render('directory', {data: docs, bornDate: docs[0].bornDate, diedDate: docs[0].diedDate});
     })
 });
 
