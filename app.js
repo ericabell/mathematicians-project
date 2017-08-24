@@ -12,9 +12,11 @@ mongoose.connect('mongodb://localhost:27017/math');
 let users = require('./routes/users.js');
 let app = express();
 
-app.use(fileUpload);
 
 app.use(bodyParser.urlencoded({ extended: false }))
+
+// app.use(fileUpload);
+
 
 app.use(express.static('public'));
 app.use(morgan('tiny'))

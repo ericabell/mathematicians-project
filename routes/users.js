@@ -1,5 +1,4 @@
 const express = require('express');
-const fileUpload = require('express-fileupload');
 ObjectId = require('mongodb').ObjectID;
 // const data = require('../models/users');
 let data = {};
@@ -11,6 +10,7 @@ let router = express.Router();
 let Mathematician = require('../models/mathematicians')
 
 router.get('/', (req, res) => {
+  console.log('root hit');
   Mathematician.find()
     .then( (docs) => {
       console.log('find all mathematicians');
