@@ -1,4 +1,7 @@
 const express = require('express');
+const multer = require('multer');
+const upload = multer({ dest: 'uploads/' });
+const fs = require('fs');
 ObjectId = require('mongodb').ObjectID;
 // const data = require('../models/users');
 let data = {};
@@ -44,13 +47,13 @@ router.get('/update/:id', (req, res) => {
     })
 });
 
-router.post('/', (req, res) => {
-  if(!req.files) {
+router.post('/', upload.single('sampleFile'), (req, res) => {
+  if(!req.file) {
     return res.status(400).send('No files were selected');
   }
 
-  let imageUpload = req.files.sampleFile.data;
-  let imageUploadFileType = req.files.sampleFile.mimetype;
+  console.log(req.file);
+  let imageUpload = fs.readFileSync('/Users/eabell/sandbox/tiy/week6/day3/mathematicians-project/uploads/' + req.file.filename );
   // create a new mathematician
   console.log(req.body);
   Mathematician.create({
@@ -61,7 +64,7 @@ router.post('/', (req, res) => {
     known_for: ['one', 'two', 'three'],
     img: {
       data: imageUpload,
-      contentType: imageUploadFileType
+      contentType: 'image/jpeg'
     },
     wikipedia_link: 'https://en.wikipedia.org/wiki/Augustin-Louis_Cauchy'
   })
