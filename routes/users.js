@@ -92,12 +92,18 @@ router.post('/', upload.single('sampleFile'), (req, res) => {
 router.post('/:id', (req, res) => {
   // update a mathematician in the db
   console.log(req.body);
+  let imageUpload = fs.readFileSync('/Users/eabell/sandbox/tiy/week6/day3/mathematicians-project/uploads/' + req.file.filename );
+
   Mathematician
     .where({_id: ObjectId(req.params.id)})
     .update( { name: req.body.name,
                born: new Date(req.body.born),
                died: new Date(req.body.died),
-               nationality: req.body.nationality
+               nationality: req.body.nationality,
+               img: {
+                 data: imageUpload,
+                 contentType: 'image/jpeg'
+               },
      })
      .then( (docs) => {
        console.log('Mathematician updated!');
