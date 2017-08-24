@@ -114,4 +114,24 @@ router.get('/delete/:id', (req, res) => {
   })
 })
 
+router.get('/images/:id', (req, res) => {
+  // fetch an image from the db
+  Mathematician.find({_id: ObjectId(req.params.id)})
+    .then( (docs) => {
+      console.log(`Found mathematician in image search`);
+      console.log(docs[0]);
+      // we want to send the image back to the browser
+      let image = new Buffer(docs[0].img.data.buffer);
+      let contentType = docs[0].img.contentType;
+
+      res.set('Content-Type', 'image/jpeg');
+      res.send(image)
+    })
+    .catch( (err) => {
+      console.log('error in find');
+      res.send('error in find: ' + err);
+    })
+    })
+
+
 module.exports = router;
