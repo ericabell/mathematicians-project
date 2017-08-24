@@ -1,6 +1,19 @@
 const express = require('express');
 const multer = require('multer');
-const upload = multer({ dest: 'uploads/' });
+
+let storage = multer.diskStorage({
+  destination: function (req, file, cb) {
+    cb(null, 'uploads/')
+  },
+  filename: function (req, file, cb) {
+    cb(null, file.fieldname + '.jpg')
+  }
+})
+
+const upload = multer({ storage: storage })
+
+// const upload = multer({ dest: 'uploads/' });
+
 const fs = require('fs');
 ObjectId = require('mongodb').ObjectID;
 // const data = require('../models/users');
