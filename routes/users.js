@@ -1,4 +1,20 @@
 const express = require('express');
+const multer = require('multer');
+
+let storage = multer.diskStorage({
+  destination: function (req, file, cb) {
+    cb(null, 'uploads/')
+  },
+  filename: function (req, file, cb) {
+    cb(null, file.fieldname + '.jpg')
+  }
+})
+
+const upload = multer({ storage: storage })
+
+// const upload = multer({ dest: 'uploads/' });
+
+const fs = require('fs');
 ObjectId = require('mongodb').ObjectID;
 // const data = require('../models/users');
 let data = {};
@@ -10,6 +26,7 @@ let router = express.Router();
 let Mathematician = require('../models/mathematicians')
 
 router.get('/', (req, res) => {
+  console.log('root hit');
   Mathematician.find()
     .then( (docs) => {
       console.log('find all mathematicians');
@@ -43,7 +60,13 @@ router.get('/update/:id', (req, res) => {
     })
 });
 
-router.post('/', (req, res) => {
+router.post('/', upload.single('sampleFile'), (req, res) => {
+  if(!req.file) {
+    return res.status(400).send('No files were selected');
+  }
+
+  console.log(req.file);
+  let imageUpload = fs.readFileSync('/Users/eabell/sandbox/tiy/week6/day3/mathematicians-project/uploads/' + req.file.filename );
   // create a new mathematician
   console.log(req.body);
   Mathematician.create({
@@ -52,6 +75,10 @@ router.post('/', (req, res) => {
     died: new Date(req.body.died),
     nationality: req.body.nationality,
     known_for: ['one', 'two', 'three'],
+    img: {
+      data: imageUpload,
+      contentType: 'image/jpeg'
+    },
     wikipedia_link: 'https://en.wikipedia.org/wiki/Augustin-Louis_Cauchy'
   })
   .then( (docs) => {
@@ -65,12 +92,18 @@ router.post('/', (req, res) => {
 router.post('/:id', (req, res) => {
   // update a mathematician in the db
   console.log(req.body);
+  let imageUpload = fs.readFileSync('/Users/eabell/sandbox/tiy/week6/day3/mathematicians-project/uploads/' + req.file.filename );
+
   Mathematician
     .where({_id: ObjectId(req.params.id)})
     .update( { name: req.body.name,
                born: new Date(req.body.born),
                died: new Date(req.body.died),
-               nationality: req.body.nationality
+               nationality: req.body.nationality,
+               img: {
+                 data: imageUpload,
+                 contentType: 'image/jpeg'
+               },
      })
      .then( (docs) => {
        console.log('Mathematician updated!');
@@ -86,5 +119,25 @@ router.get('/delete/:id', (req, res) => {
     res.redirect('/');
   })
 })
+
+router.get('/images/:id', (req, res) => {
+  // fetch an image from the db
+  Mathematician.find({_id: ObjectId(req.params.id)})
+    .then( (docs) => {
+      console.log(`Found mathematician in image search`);
+      console.log(docs[0]);
+      // we want to send the image back to the browser
+      let image = new Buffer(docs[0].img.data.buffer);
+      let contentType = docs[0].img.contentType;
+
+      res.set('Content-Type', 'image/jpeg');
+      res.send(image)
+    })
+    .catch( (err) => {
+      console.log('error in find');
+      res.send('error in find: ' + err);
+    })
+    })
+
 
 module.exports = router;

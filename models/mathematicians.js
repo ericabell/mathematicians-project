@@ -68,12 +68,12 @@ Mathematician.deleteMany({})
     })
 
     let newton = new Mathematician;
-    newton.img.data = fs.readFileSync('/Users/eabell/sandbox/tiy/week6/day3/mathematicians-project/public/images/cauchy.jpg');
+    newton.img.data = fs.readFileSync('/Users/eabell/sandbox/tiy/week6/day3/mathematicians-project/public/images/newton.jpg');
     newton.img.contentType = 'image/jpg';
     newton.img.url = '/images/newton.jpg'
     newton.name = 'Newton';
-    newton.born = new Date('8-21-1789');
-    newton.died = new Date('5-23-1857');
+    newton.born = new Date('12-25-1642');
+    newton.died = new Date('3-20-1727');
     newton.nationality = 'English';
     newton.known_for = ['Calculus', 'Newtonian mechanics', 'Binomial series'];
     newton.wikipedia_link = 'https://en.wikipedia.org/wiki/Augustin-Louis_Cauchy';
