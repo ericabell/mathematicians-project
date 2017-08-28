@@ -16,9 +16,7 @@ const upload = multer({ storage: storage })
 
 const fs = require('fs');
 ObjectId = require('mongodb').ObjectID;
-// const data = require('../models/users');
-let data = {};
-const MongoClient = require('mongodb').MongoClient;
+
 const assert = require('assert');
 
 let router = express.Router();
