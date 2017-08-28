@@ -33,7 +33,7 @@ router.get('/', (req, res) => {
     })
 });
 
-router.get('/id/:id', (req, res) => {
+router.get('/mathematician/:id', (req, res) => {
   Mathematician.find({_id: ObjectId(req.params.id)})
     .then( (docs) => {
       console.log('find one mathematician');
@@ -46,7 +46,7 @@ router.get('/create', (req, res) => {
   res.render('create');
 })
 
-router.get('/update/:id', (req, res) => {
+router.get('/mathematician/update/:id', (req, res) => {
   // find the requested mathematician
   Mathematician.find({_id: ObjectId(req.params.id)})
     .then( (docs) => {
@@ -87,7 +87,7 @@ router.post('/', upload.single('sampleFile'), (req, res) => {
 
 });
 
-router.post('/:id', (req, res) => {
+router.post('/mathematician/:id', (req, res) => {
   // update a mathematician in the db
   console.log(req.body);
   let imageUpload = fs.readFileSync('/Users/eabell/sandbox/tiy/week6/day3/mathematicians-project/uploads/' + req.file.filename );

@@ -43,13 +43,10 @@ const Mathematician = mongoose.model('Mathematician', mathematicianSchema);
 
 // drop all mathematicians and create a new one
 Mathematician.deleteMany({})
-  .then( (docs) => {
-    console.log('Deleted all mathematicians');
-    console.log(docs.result);
-    return(docs);
-  })
   .then( () => {
+    console.log('all mathematicians deleted...');
     console.log('let us create some mathematicians');
+
     let cauchy = new Mathematician;
     cauchy.img.data = fs.readFileSync('/Users/eabell/sandbox/tiy/week6/day3/mathematicians-project/public/images/cauchy.jpg');
     cauchy.img.contentType = 'image/jpg';
@@ -65,6 +62,9 @@ Mathematician.deleteMany({})
     .then( (docs) => {
         console.log('Created mathematician Cauchy');
         console.log(docs);
+    })
+    .catch( (err) => {
+      console.log(`Error creating Cauchy: ${err}`);
     })
 
     let newton = new Mathematician;
@@ -83,10 +83,11 @@ Mathematician.deleteMany({})
         console.log('Created mathematician Newton');
         console.log(docs);
     })
+    .catch( (err) => {
+      console.log(`Error creating Newton: ${err}`);
+    })
+
   })
-
-
-
   .catch( (err) => {
       console.log('Errors: ' + err);
   })
